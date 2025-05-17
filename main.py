@@ -98,26 +98,3 @@ plt.ylabel("Прогнозовані значення (y_pred)")
 plt.title("Факт vs Прогноз (Linear Regression)")
 plt.grid(True)
 plt.show()
-
-#%%
-lasso_model = Lasso()
-parameters = {'alpha': [0.1, 1, 10, 100, 1000]}
-
-grid_search_lasso = GridSearchCV(lasso_model, parameters, cv=5, scoring='neg_mean_squared_error')
-grid_search_lasso.fit(X_train_scaled, y_train)
-
-best_alpha_lasso = grid_search_lasso.best_params_['alpha']
-print("Кращий параметр alpha для Lasso:", best_alpha_lasso)
-
-lasso_optimized = grid_search_lasso.best_estimator_
-y_pred_lasso = lasso_optimized.predict(X_test_scaled)
-
-mae_lasso = mean_absolute_error(y_test, y_pred_lasso)
-mse_lasso = mean_squared_error(y_test, y_pred_lasso)
-rmse_lasso = np.sqrt(mse_lasso)
-r2_lasso = r2_score(y_test, y_pred_lasso)
-
-print(f"MAE (Lasso): {mae_lasso:.4f}")
-print(f"MSE (Lasso): {mse_lasso:.4f}")
-print(f"RMSE (Lasso): {rmse_lasso:.4f}")
-print(f"R² (Lasso): {r2_lasso:.4f}")
